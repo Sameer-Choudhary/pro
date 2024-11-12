@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trade Position Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 300px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+    }
+
+    .btn {
+      margin-top: 20px;
+      padding: 10px 15px;
+      color: #fff;
+      background-color: #28a745;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .output {
+      margin-top: 15px;
+      color: #333;
+    }
+
+    .output p {
+      margin: 5px 0;
+    }
+
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Trade Position Calculator</h2>
+    <label for="totalCapital">Total Capital</label>
+    <input type="number" id="totalCapital" placeholder="Enter total capital" required>
+
+    <label for="riskAmount">Risk Amount</label>
+    <input type="number" id="riskAmount" placeholder="Enter risk amount" required>
+
+    <label for="entryPrice">Entry Price</label>
+    <input type="number" id="entryPrice" placeholder="Enter entry price" required>
+
+    <label for="stopLossPrice">Stop Loss Price</label>
+    <input type="number" id="stopLossPrice" placeholder="Enter stop loss price" required>
+
+    <label for="lotSize">Lot Size (default is 1)</label>
+    <input type="number" id="lotSize" value="1" min="1">
+
+    <label for="margin">Margin (default is 1)</label>
+    <input type="number" id="margin" value="1" min="1">
+
+    <button class="btn" onclick="calculateTrade()">Calculate</button>
+
+    <div class="output" id="output"></div>
+  </div>
+
+  <script>
+    function calculateTrade() {
+      const totalCapital = parseFloat(document.getElementById("totalCapital").value);
+      const riskAmount = parseFloat(document.getElementById("riskAmount").value);
+      const entryPrice = parseFloat(document.getElementById("entryPrice").value);
+      const stopLossPrice = parseFloat(document.getElementById("stopLossPrice").value);
+      const lotSize = parseFloat(document.getElementById("lotSize").value) || 1; // default lot size is 1
+      const margin = parseFloat(document.getElementById("margin").value) || 1; // default margin is 1
+
+      const outputDiv = document.getElementById("output");
+      outputDiv.innerHTML = "";
+
+      if (isNaN(totalCapital) || isNaN(riskAmount) || isNaN(entryPrice) || isNaN(stopLossPrice) || isNaN(lotSize) || isNaN(margin)) {
+        outputDiv.innerHTML = "<p class='error'>Please enter valid values for all fields.</p>";
+        return;
+      }
+
+      const stopLossDistance = Math.abs(entryPrice - stopLossPrice);
+      const positionSize = (riskAmount / stopLossDistance).toFixed(2);
+      const amountRequired = (positionSize * entryPrice * lotSize * margin).toFixed(2);
+
+      outputDiv.innerHTML += `<p>Position Size: ${positionSize} units</p>`;
+      outputDiv.innerHTML += `<p>Amount Required for Trade: $${amountRequired}</p>`;
+
+      if (amountRequired <= totalCapital) {
+        outputDiv.innerHTML += "<p style='color: green;'>You can perform this trade.</p>";
+      } else {
+        outputDiv.innerHTML += "<p style='color: red;'>Insufficient capital to perform this trade.</p>";
+      }
+    }
+  </script>
+</body>
+</html>
