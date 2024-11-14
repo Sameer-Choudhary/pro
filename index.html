@@ -78,16 +78,16 @@
     <label for="riskAmount">Risk Amount</label>
     <input type="number" id="riskAmount" placeholder="Enter risk amount" required>
 
-    <label for="entryPrice">Entry Price</label>
-    <input type="number" id="entryPrice" placeholder="Enter entry price" required>
-
     <label for="stopLossPrice">Stop Loss Price</label>
     <input type="number" id="stopLossPrice" placeholder="Enter stop loss price" required>
 
-    <label for="lotSize">Lot Size (default is 1)</label>
+    <label for="entryPrice">Entry Price</label>
+    <input type="number" id="entryPrice" placeholder="Enter entry price" required>
+
+    <label for="lotSize">Lot Size</label>
     <input type="number" id="lotSize" value="1" min="1">
 
-    <label for="margin">Margin (default is 1)</label>
+    <label for="margin">Margin</label>
     <input type="number" id="margin" value="1" min="1">
 
     <button class="btn" onclick="calculateTrade()">Calculate</button>
@@ -113,7 +113,8 @@
       }
 
       const stopLossDistance = Math.abs(entryPrice - stopLossPrice);
-      const positionSize = (riskAmount / stopLossDistance).toFixed(2);
+      const newpositionSize = (riskAmount / stopLossDistance).toFixed(2);
+      const positionSize = (newpositionSize / lotSize).toFixed(2);
       const amountRequired = (positionSize * entryPrice * lotSize * margin).toFixed(2);
 
       outputDiv.innerHTML += `<p>Position Size: ${positionSize} units</p>`;
