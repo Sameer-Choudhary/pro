@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Thermal Printer Billing Solution</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background: linear-gradient(to bottom right, #f5f7fa, #c3cfe2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        button {
+            padding: 12px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .content {
+            text-align: left;
+            display: none;
+        }
+        .content p {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+        strong {
+            color: #007bff;
+        }
+        a {
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .show {
+            display: block;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        img {
+            display: block;
+            margin: 10px auto;  /* This centers the image horizontally */
+            width: 100%;
+            max-width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="language-selection">
+        <h2>Select Language / भाषा चुनें</h2>
+        <button onclick="setLanguage('english')">English</button>
+        <button onclick="setLanguage('hindi')">हिन्दी</button>
+    </div>
+
+    <div id="content" class="content"></div>
+</div>
+
+<script>
+    function setLanguage(language) {
+        const contentDiv = document.getElementById('content');
+        const selectionDiv = document.querySelector('.language-selection');
+
+        const phoneNumber = '8104189892';
+        const whatsappLink = `https://wa.me/${phoneNumber}`;
+        const mailToLink = `mailto:sameerayubchoudhary@gmail.com`;
+
+        let content = "";
+
+        if (language === 'english') {
+            content = `
+                <p>📜 Are you still using paper bills?</p>
+                <p>📉 Facing trouble keeping track of sales?</p>
+                <p>💬 Customers constantly arguing over rates?</p>
+                <p><strong>💡 Upgrade now – Our Thermal Printer Billing Solution is perfect for you!</strong></p>
+                <ul>
+                    <li>✅ Instant printing with your product names & rates</li>
+                    <li>✅ Every bill automatically saved on Telegram</li>
+                    <li>✅ QR Code on every bill – Customers pay the exact amount</li>
+                </ul>
+                <p><strong>One-time purchase:</strong></p>
+                <p>🖨️ 58mm Thermal Printer – ₹2500</p>
+                <img src="58mm_printer.png" alt="58mm Thermal Printer"> <!-- Replace with your image URL -->
+                
+                <p>🖨️ 80mm Thermal Printer – ₹5000</p>
+                <img src="80mm_printer.png" alt="80mm Thermal Printer"> <!-- Replace with your image URL -->
+
+                <p><strong>Subscription (First 3 months FREE!):</strong></p>
+                <p>📲 After that, only ₹199/month – Lifetime service included: Add/remove products, change rates or QR code anytime</p>
+
+                <p><strong>📞 Contact:</strong></p>
+                <p>📞 <a href="tel:${phoneNumber}">Call Directly: 8104189892</a></p>
+                <p>💬 <a href="${whatsappLink}" target="_blank">Message on WhatsApp: 8104189892</a></p>
+                <p>📧 <a href="${mailToLink}">Send Email: sameerayubchoudhary@gmail.com</a></p>
+
+                <p>Sample bill below: Scan the QR to see you can only pay the exact amount.</p>
+                <img src="sample_bill.jpeg" alt="Sample Thermal Bill"> <!-- Replace with your image URL -->
+            `;
+        } else {
+            content = `
+                <p>📜 क्या आप अब भी कागज़ के बिल इस्तेमाल कर रहे हैं?</p>
+                <p>📉 क्या आपको बिक्री का हिसाब रखने में परेशानी हो रही है?</p>
+                <p>💬 क्या ग्राहक बार-बार रेट को लेकर बहस करते हैं?</p>
+                <p><strong>💡 अब समय आ गया है अपग्रेड करने का – हमारा Thermal Printer Billing Solution खास आपके लिए!</strong></p>
+                <ul>
+                    <li>✅ आपके प्रोडक्ट्स और रेट के साथ तुरंत प्रिंटिंग (Thermal Paper पर)</li>
+                    <li>✅ हर बिल Telegram पर ऑटोमैटिक सेव</li>
+                    <li>✅ हर बिल पर QR कोड – ग्राहक सिर्फ तय की गई राशि ही पे कर पाएंगे</li>
+                </ul>
+                <p><strong>एक बार की खरीद:</strong></p>
+                <p>🖨️ 58mm Thermal Printer – ₹2500</p>
+                <img src="58mm_printer.png" alt="58mm Thermal Printer"> <!-- Replace with your image URL -->
+
+                <p>🖨️ 80mm Thermal Printer – ₹5000</p>
+                <img src="80mm_printer.png" alt="80mm Thermal Printer"> <!-- Replace with your image URL -->
+
+                <p><strong>सब्सक्रिप्शन (पहले 3 महीने फ्री!):</strong></p>
+                <p>📲 उसके बाद सिर्फ ₹199/महीना – लाइफटाइम सर्विस शामिल: प्रोडक्ट जोड़ें/हटाएं, रेट या QR कोड कभी भी बदलें।</p>
+
+                <p><strong>📞 संपर्क करें:</strong></p>
+                <p>📞 <a href="tel:${phoneNumber}">सीधे कॉल करें: 8104189892</a></p>
+                <p>💬 <a href="${whatsappLink}" target="_blank">WhatsApp पर संदेश भेजें: 8104189892</a></p>
+                <p>📧 <a href="${mailToLink}">ईमेल भेजें: sameerayubchoudhary@gmail.com</a></p>
+
+                <p>सैंपल बिल नीचे: QR स्कैन करें, केवल तय राशि का ही भुगतान होगा।</p>
+                <img src="sample_bill.jpeg" alt="Sample Thermal Bill"> <!-- Replace with your image URL -->
+            `;
+        }
+
+        selectionDiv.style.display = 'none';
+        contentDiv.innerHTML = content;
+        contentDiv.classList.add('show');
+    }
+</script>
+
+</body>
+</html>
