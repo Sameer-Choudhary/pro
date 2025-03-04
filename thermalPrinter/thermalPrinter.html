@@ -3,6 +3,17 @@
 <head>
     <title>Thermal Printer Billing Solution</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7JS8YR7P6N"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7JS8YR7P6N');
+    </script>
+
     <style>
         * {
             margin: 0;
@@ -72,7 +83,7 @@
         }
         img {
             display: block;
-            margin: 10px auto;  /* This centers the image horizontally */
+            margin: 10px auto;
             width: 100%;
             max-width: 300px;
             border: 1px solid #ddd;
@@ -116,10 +127,10 @@
                 </ul>
                 <p><strong>One-time purchase:</strong></p>
                 <p>🖨️ 58mm Thermal Printer – ₹2500</p>
-                <img src="58mm_printer.png" alt="58mm Thermal Printer"> <!-- Replace with your image URL -->
+                <img src="58mm_printer.png" alt="58mm Thermal Printer">
                 
                 <p>🖨️ 80mm Thermal Printer – ₹5000</p>
-                <img src="80mm_printer.png" alt="80mm Thermal Printer"> <!-- Replace with your image URL -->
+                <img src="80mm_printer.png" alt="80mm Thermal Printer">
 
                 <p><strong>Subscription (First 3 months FREE!):</strong></p>
                 <p>📲 After that, only ₹199/month – Lifetime service included: Add/remove products, change rates or QR code anytime</p>
@@ -129,7 +140,7 @@
                 <p>📧 Send Email: sameerayubchoudhary@gmail.com</p>
 
                 <p>Sample bill below: Scan the QR to see you can only pay the exact amount.</p>
-                <img src="sample_bill.jpeg" alt="Sample Thermal Bill"> <!-- Replace with your image URL -->
+                <img src="sample_bill.jpeg" alt="Sample Thermal Bill">
             `;
         } else {
             content = `
@@ -144,10 +155,10 @@
                 </ul>
                 <p><strong>एक बार की खरीद:</strong></p>
                 <p>🖨️ 58mm Thermal Printer – ₹2500</p>
-                <img src="58mm_printer.png" alt="58mm Thermal Printer"> <!-- Replace with your image URL -->
+                <img src="58mm_printer.png" alt="58mm Thermal Printer">
 
                 <p>🖨️ 80mm Thermal Printer – ₹5000</p>
-                <img src="80mm_printer.png" alt="80mm Thermal Printer"> <!-- Replace with your image URL -->
+                <img src="80mm_printer.png" alt="80mm Thermal Printer">
 
                 <p><strong>सब्सक्रिप्शन (पहले 3 महीने फ्री!):</strong></p>
                 <p>📲 उसके बाद सिर्फ ₹199/महीना – लाइफटाइम सर्विस शामिल: प्रोडक्ट जोड़ें/हटाएं, रेट या QR कोड कभी भी बदलें।</p>
@@ -157,7 +168,7 @@
                 <p>📧 ईमेल भेजें: sameerayubchoudhary@gmail.com</p>
 
                 <p>सैंपल बिल नीचे: QR स्कैन करें, केवल तय राशि का ही भुगतान होगा।</p>
-                <img src="sample_bill.jpeg" alt="Sample Thermal Bill"> <!-- Replace with your image URL -->
+                <img src="sample_bill.jpeg" alt="Sample Thermal Bill">
             `;
         }
 
