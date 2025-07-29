@@ -119,7 +119,7 @@
       const stopLossDistance = Math.abs(entryPrice - stopLossPrice);
       const newpositionSize = (riskAmount / stopLossDistance).toFixed(2);
       const positionSize = (newpositionSize / lotSize).toFixed(2);
-      const amountRequired = (positionSize * entryPrice * lotSize * margin).toFixed(2);
+      const amountRequired = (positionSize * entryPrice * lotSize).toFixed(2);
 
       outputDiv.innerHTML += `<p>Risk Amount: $${riskAmount}</p>`;
       outputDiv.innerHTML += `<p>Position Size: ${positionSize} units</p>`;
