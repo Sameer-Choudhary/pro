@@ -114,6 +114,7 @@
 
       // Calculate risk amount as a percentage of total capital
       const riskAmount = (riskPercentage).toFixed(2);
+      const newCapital = (totalCapital * margin).toFixed(2);
 
       const stopLossDistance = Math.abs(entryPrice - stopLossPrice);
       const newpositionSize = (riskAmount / stopLossDistance).toFixed(2);
@@ -124,7 +125,7 @@
       outputDiv.innerHTML += `<p>Position Size: ${positionSize} units</p>`;
       outputDiv.innerHTML += `<p>Amount Required for Trade: $${amountRequired}</p>`;
 
-      if (amountRequired <= totalCapital) {
+      if (amountRequired <= newCapital) {
         outputDiv.innerHTML += "<p style='color: green;'>You can perform this trade.</p>";
       } else {
         outputDiv.innerHTML += "<p style='color: red;'>Insufficient capital to perform this trade.</p>";
