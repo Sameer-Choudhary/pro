@@ -75,7 +75,7 @@
     <label for="totalCapital">Total Capital</label>
     <input type="number" id="totalCapital" placeholder="Enter total capital" required>
 
-    <label for="riskPercentage">Risk Percentage</label>
+    <label for="riskPercentage">Risk Amount</label>
     <input type="number" id="riskPercentage" placeholder="Risk Percentage" required>
 
     <label for="stopLossPrice">Stop Loss Price</label>
@@ -113,14 +113,14 @@
       }
 
       // Calculate risk amount as a percentage of total capital
-      const riskAmount = (totalCapital * (riskPercentage / 100)).toFixed(2);
+      const riskAmount = (riskPercentage).toFixed(2);
 
       const stopLossDistance = Math.abs(entryPrice - stopLossPrice);
       const newpositionSize = (riskAmount / stopLossDistance).toFixed(2);
       const positionSize = (newpositionSize / lotSize).toFixed(2);
       const amountRequired = (positionSize * entryPrice * lotSize * margin).toFixed(2);
 
-      outputDiv.innerHTML += `<p>Risk Amount (based on ${riskPercentage}%): $${riskAmount}</p>`;
+      outputDiv.innerHTML += `<p>Risk Amount: $${riskAmount}</p>`;
       outputDiv.innerHTML += `<p>Position Size: ${positionSize} units</p>`;
       outputDiv.innerHTML += `<p>Amount Required for Trade: $${amountRequired}</p>`;
 
