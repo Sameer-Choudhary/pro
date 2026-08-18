@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PaceDay</title>
+<style>
+:root{
+  --bg:#f7f7f7;
+  --text:#252525;
+  --muted:#686868;
+  --white:#fff;
+  --green:#8bd12b;
+  --yellow:#d8d916;
+  --purple:#9333d7;
+  --red:#d93608;
+  --pink:#d52fc1;
+  --blue:#2c99d6;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+}
+.app{
+  width:100%;
+  max-width:520px;
+  margin:auto;
+  padding:14px 10px 40px;
+}
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:4px 6px 15px;
+}
+.header h1{
+  margin:0;
+  font-size:25px;
+  font-weight:800;
+}
+.clock{
+  font-size:16px;
+  font-weight:800;
+  font-variant-numeric:tabular-nums;
+}
+.goal-list{
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+}
+.goal-row{
+  min-height:62px;
+  border-radius:30px;
+  display:flex;
+  align-items:center;
+  padding:7px 8px 7px 7px;
+}
+.goal-icon{
+  width:47px;
+  height:47px;
+  min-width:47px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:20px;
+  font-weight:800;
+}
+.goal-info{
+  flex:1;
+  min-width:0;
+  padding:0 11px;
+}
+.goal-name{
+  font-size:14px;
+  line-height:18px;
+  font-weight:800;
+}
+.goal-should{
+  margin-top:2px;
+  font-size:12px;
+  color:#555;
+  line-height:17px;
+}
+.goal-value{
+  font-size:14px;
+  font-weight:800;
+  color:#222;
+}
+.goal-total{
+  color:#777;
+  font-weight:500;
+}
+.goal-right{
+  width:40px;
+  min-width:40px;
+  text-align:center;
+}
+.percent{
+  font-size:10px;
+  font-weight:700;
+  color:#666;
+}
+.progress{
+  height:3px;
+  width:34px;
+  margin:4px auto 0;
+  background:rgba(0,0,0,.13);
+  border-radius:5px;
+  overflow:hidden;
+}
+.progress span{
+  display:block;
+  height:100%;
+  background:rgba(0,0,0,.35);
+}
+.green{background:#e5f4cf}.green .goal-icon{background:var(--green)}
+.yellow{background:#f2f2c8}.yellow .goal-icon{background:var(--yellow)}
+.purple{background:#ead7f4}.purple .goal-icon{background:var(--purple)}
+.red{background:#f0d3c9}.red .goal-icon{background:var(--red)}
+.pink{background:#f0d0ec}.pink .goal-icon{background:var(--pink)}
+.blue{background:#d2e9f5}.blue .goal-icon{background:var(--blue)}
+
+.add-section{margin-top:14px}
+.add-button{
+  width:100%;
+  height:50px;
+  border:0;
+  border-radius:25px;
+  background:#222;
+  color:#fff;
+  font-size:15px;
+  font-weight:800;
+  cursor:pointer;
+}
+.form{
+  display:none;
+  background:#fff;
+  border-radius:18px;
+  padding:15px;
+  margin-top:9px;
+}
+.form.show{display:block}
+.form h2{
+  margin:0 0 12px;
+  font-size:17px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:1.4fr .8fr .9fr;
+  gap:8px;
+}
+label{
+  display:block;
+  font-size:10px;
+  font-weight:800;
+  color:#777;
+  margin:0 0 5px 3px;
+}
+input{
+  width:100%;
+  height:42px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:0 10px;
+  font:inherit;
+}
+.actions{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+.actions button{
+  flex:1;
+  height:42px;
+  border:0;
+  border-radius:10px;
+  font-weight:800;
+}
+.save{background:#222;color:#fff}
+.cancel{background:#eee;color:#333}
+.empty{
+  background:#fff;
+  border-radius:18px;
+  padding:28px;
+  text-align:center;
+  color:#777;
+}
+
+.goal-menu{
+  width:30px;
+  min-width:30px;
+  position:relative;
+  margin-left:2px;
+}
+.menu-btn{
+  width:28px;
+  height:36px;
+  border:0;
+  background:transparent;
+  color:#555;
+  font-size:22px;
+  line-height:30px;
+  cursor:pointer;
+  border-radius:14px;
+}
+.menu-btn:hover{background:rgba(0,0,0,.08)}
+.menu-popup{
+  position:fixed;
+  z-index:50;
+  min-width:130px;
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 5px 25px rgba(0,0,0,.18);
+  padding:5px;
+  display:none;
+}
+.menu-popup.show{display:block}
+.menu-popup button{
+  display:block;
+  width:100%;
+  border:0;
+  background:#fff;
+  text-align:left;
+  padding:10px 12px;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:700;
+  cursor:pointer;
+}
+.menu-popup button:hover{background:#f2f2f2}
+.menu-popup .delete-option{color:#c62828}
+
+.edit-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.35);
+  z-index:60;
+  align-items:flex-end;
+  justify-content:center;
+}
+.edit-overlay.show{display:flex}
+.edit-box{
+  width:min(520px,100%);
+  background:#fff;
+  border-radius:22px 22px 0 0;
+  padding:18px;
+}
+.edit-box h2{margin:0 0 14px;font-size:18px}
+.edit-grid{
+  display:grid;
+  grid-template-columns:1.4fr .8fr .9fr;
+  gap:8px;
+}
+.edit-buttons{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+.edit-buttons button{
+  flex:1;
+  height:43px;
+  border:0;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+}
+.edit-cancel{background:#eee;color:#333}
+.edit-save{background:#222;color:#fff}
+
+@media(max-width:430px){
+  .grid{grid-template-columns:1fr 1fr}
+  .grid .field:first-child{grid-column:1/-1}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+  <div class="header">
+    <h1>PaceDay</h1>
+    <div class="clock" id="clock">00:00:00</div>
+  </div>
+
+  <div id="goalList" class="goal-list"></div>
+
+  <div class="add-section">
+    <button class="add-button" onclick="toggleForm()">＋ Add Goal</button>
+
+    <div class="form" id="form">
+      <h2>Add Goal</h2>
+
+      <div class="grid">
+        <div class="field">
+          <label>NAME</label>
+          <input id="name" placeholder="Walk">
+        </div>
+
+        <div class="field">
+          <label>TARGET</label>
+          <input id="target" type="number" min="0" step="any" placeholder="10000">
+        </div>
+
+        <div class="field">
+          <label>UNIT</label>
+          <input id="unit" placeholder="steps">
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="cancel" onclick="toggleForm()">Cancel</button>
+        <button class="save" onclick="addGoal()">Add</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<div id="menuPopup" class="menu-popup">
+  <button onclick="editSelected()">Edit</button>
+  <button class="delete-option" onclick="deleteSelected()">Delete</button>
+</div>
+
+<div id="editOverlay" class="edit-overlay" onclick="closeEdit(event)">
+  <div class="edit-box" onclick="event.stopPropagation()">
+    <h2>Edit Goal</h2>
+    <div class="edit-grid">
+      <div>
+        <label>NAME</label>
+        <input id="editName" type="text">
+      </div>
+      <div>
+        <label>TARGET</label>
+        <input id="editTarget" type="number" min="0" step="any">
+      </div>
+      <div>
+        <label>UNIT</label>
+        <input id="editUnit" type="text">
+      </div>
+    </div>
+    <div class="edit-buttons">
+      <button class="edit-cancel" onclick="closeEdit()">Cancel</button>
+      <button class="edit-save" onclick="saveEdit()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const defaultGoals=[
+  {id:"walk",name:"Walk",target:10000,unit:"steps",color:"green"},
+  {id:"floss",name:"Flossing",target:1,unit:"time",color:"yellow"},
+  {id:"read",name:"Read a book",target:45,unit:"minutes",color:"purple"},
+  {id:"coffee",name:"Limit Coffee",target:5,unit:"coffees",color:"red"},
+  {id:"yoga",name:"Yoga",target:30,unit:"minutes",color:"pink"},
+  {id:"water",name:"Drink water",target:8,unit:"glasses",color:"blue"}
+];
+
+let goals=JSON.parse(localStorage.getItem("paceDayGoals")||"null")||defaultGoals;
+let selectedGoalId=null;
+
+const colors=["green","yellow","purple","red","pink","blue"];
+
+function save(){
+  localStorage.setItem("paceDayGoals",JSON.stringify(goals));
+}
+
+function minutesNow(){
+  const d=new Date();
+  return d.getHours()*60+d.getMinutes()+d.getSeconds()/60;
+}
+
+function expected(goal){
+  return goal.target*(minutesNow()/1440);
+}
+
+function format(n){
+  return Number(n).toLocaleString(undefined,{maximumFractionDigits:1});
+}
+
+function clock(){
+  const d=new Date();
+  document.getElementById("clock").textContent=
+    String(d.getHours()).padStart(2,"0")+":"+
+    String(d.getMinutes()).padStart(2,"0")+":"+
+    String(d.getSeconds()).padStart(2,"0");
+}
+
+function displayValue(goal){
+  let value=expected(goal);
+
+  // For goals where fractional values don't make practical sense,
+  // show the whole number that should have been reached by now.
+  if(
+    goal.unit.toLowerCase().includes("step") ||
+    goal.unit.toLowerCase().includes("glass") ||
+    goal.unit.toLowerCase().includes("coffee") ||
+    goal.unit.toLowerCase()==="time"
+  ){
+    value=Math.floor(value);
+  }else{
+    value=Math.round(value*10)/10;
+  }
+
+  return format(value);
+}
+
+function render(){
+  clock();
+
+  const list=document.getElementById("goalList");
+
+  if(!goals.length){
+    list.innerHTML=
+      '<div class="empty">No goals yet.<br>Press <b>＋ Add Goal</b> to create one.</div>';
+    return;
+  }
+
+  list.innerHTML=goals.map((goal,index)=>{
+    const value=expected(goal);
+    const percent=Math.min(100,(value/goal.target)*100);
+    const color=goal.color||colors[index%colors.length];
+
+    return `
+      <div class="goal-row ${color}">
+        <div class="goal-icon">
+          ${escapeHtml(goal.name.charAt(0).toUpperCase())}
+        </div>
+
+        <div class="goal-info">
+          <div class="goal-name">${escapeHtml(goal.name)}</div>
+          <div class="goal-should">
+            Should be:
+            <span class="goal-value">${displayValue(goal)}</span>
+            <span class="goal-total">/ ${format(goal.target)} ${escapeHtml(goal.unit)}</span>
+          </div>
+        </div>
+
+        <div class="goal-right">
+          <div class="percent">${Math.round(percent)}%</div>
+          <div class="progress">
+            <span style="width:${percent}%"></span>
+          </div>
+        </div>
+
+        <div class="goal-menu">
+          <button class="menu-btn" onclick="openMenu(event,'${goal.id}')">⋮</button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function escapeHtml(v){
+  return String(v).replace(/[&<>"']/g,c=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  }[c]));
+}
+
+
+function openMenu(event,id){
+  event.stopPropagation();
+  selectedGoalId=id;
+
+  const popup=document.getElementById("menuPopup");
+  const rect=event.currentTarget.getBoundingClientRect();
+
+  popup.style.left=Math.max(8,rect.right-130)+"px";
+  popup.style.top=(rect.bottom+5)+"px";
+  popup.classList.add("show");
+}
+
+function closeMenu(){
+  document.getElementById("menuPopup").classList.remove("show");
+}
+
+function editSelected(){
+  const goal=goals.find(g=>g.id===selectedGoalId);
+  closeMenu();
+  if(!goal)return;
+
+  document.getElementById("editName").value=goal.name;
+  document.getElementById("editTarget").value=goal.target;
+  document.getElementById("editUnit").value=goal.unit;
+  document.getElementById("editOverlay").classList.add("show");
+  document.getElementById("editName").focus();
+}
+
+function closeEdit(event){
+  if(event && event.target!==document.getElementById("editOverlay"))return;
+  document.getElementById("editOverlay").classList.remove("show");
+  selectedGoalId=null;
+}
+
+function saveEdit(){
+  const goal=goals.find(g=>g.id===selectedGoalId);
+  if(!goal)return;
+
+  const name=document.getElementById("editName").value.trim();
+  const target=Number(document.getElementById("editTarget").value);
+  const unit=document.getElementById("editUnit").value.trim();
+
+  if(!name||!unit||!Number.isFinite(target)||target<=0){
+    alert("Enter a valid name, target and unit.");
+    return;
+  }
+
+  goal.name=name;
+  goal.target=target;
+  goal.unit=unit;
+
+  save();
+  document.getElementById("editOverlay").classList.remove("show");
+  selectedGoalId=null;
+  render();
+}
+
+function deleteSelected(){
+  const goal=goals.find(g=>g.id===selectedGoalId);
+  closeMenu();
+
+  if(!goal)return;
+
+  if(confirm('Delete "'+goal.name+'"?')){
+    goals=goals.filter(g=>g.id!==selectedGoalId);
+    save();
+    selectedGoalId=null;
+    render();
+  }
+}
+
+document.addEventListener("click",function(){
+  closeMenu();
+});
+
+function toggleForm(){
+  document.getElementById("form").classList.toggle("show");
+
+  if(document.getElementById("form").classList.contains("show")){
+    document.getElementById("name").focus();
+  }
+}
+
+function addGoal(){
+  const name=document.getElementById("name").value.trim();
+  const target=Number(document.getElementById("target").value);
+  const unit=document.getElementById("unit").value.trim();
+
+  if(!name || !unit || !Number.isFinite(target) || target<=0){
+    alert("Enter a name, target and unit.");
+    return;
+  }
+
+  goals.push({
+    id:"goal-"+Date.now(),
+    name:name,
+    target:target,
+    unit:unit,
+    color:colors[goals.length%colors.length]
+  });
+
+  save();
+
+  document.getElementById("name").value="";
+  document.getElementById("target").value="";
+  document.getElementById("unit").value="";
+  document.getElementById("form").classList.remove("show");
+
+  render();
+}
+
+document.addEventListener("keydown",function(e){
+  if(e.key==="Escape"){
+    closeMenu();
+    document.getElementById("editOverlay").classList.remove("show");
+    selectedGoalId=null;
+  }
+});
+
+render();
+setInterval(render,1000);
+</script>
+</body>
+</html>
